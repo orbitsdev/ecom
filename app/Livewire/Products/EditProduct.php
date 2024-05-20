@@ -9,6 +9,7 @@ use Filament\Forms\Form;
 use Illuminate\Contracts\View\View;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -80,7 +81,7 @@ class EditProduct extends Component implements HasForms
                 Forms\Components\Group::make()
                     ->schema([
                         Section::make('Product Details')
-                        // ->extraAttributes(['style' => 'background-color:#f3f4f6; border: 1px none; '])
+                            // ->extraAttributes(['style' => 'background-color:#f3f4f6; border: 1px none; '])
                             ->schema([
                                 FileUpload::make('image')
 
@@ -92,39 +93,32 @@ class EditProduct extends Component implements HasForms
                                     ->directory('products'),
                             ]),
                         Section::make('Variant Details')
-                        // ->extraAttributes(['style' => 'background-color:#f3f4f6; border: 1px none; '])
+                            // ->extraAttributes(['style' => 'background-color:#f3f4f6; border: 1px none; '])
                             ->schema([
 
                                 TableRepeater::make('product_variants')
-                                ->withoutHeader()
-                                ->columnWidths([
-                                    'name' => '200px',
-                                    'image' => '100px',
-                                ])
-                                ->relationship('variants')
-    ->schema([
-        Forms\Components\TextInput::make('name')
-        ->maxLength(191)
-        ->required(),
+                                    ->withoutHeader()
+                                    ->columnWidths([
+                                        'name' => '200px',
+                                        'image' => '100px',
+                                    ])
+                                    ->relationship('variants')
+                                    ->schema([
+                                        Forms\Components\TextInput::make('name')
+                                            ->maxLength(191)
+                                            ->required(),
 
 
-        FileUpload::make('image')
-        ->required()
-        ->preserveFilenames()
-        ->maxSize(200000)
-        ->label('Featured Image')
-        ->disk('public')
-        ->directory('products'),
-    ])
-    ->columnSpan('full')
-                                // FileUpload::make('image')
+                                        FileUpload::make('image')
+                                            ->required()
+                                            ->preserveFilenames()
+                                            ->maxSize(200000)
+                                            ->label('Featured Image')
+                                            ->disk('public')
+                                            ->directory('products'),
+                                    ])
+                                    ->columnSpan('full')
 
-                                //     ->required()
-                                //     ->preserveFilenames()
-                                //     ->maxSize(200000)
-                                //     ->label('Featured Image')
-                                //     ->disk('public')
-                                //     ->directory('products'),
                             ]),
 
                     ])->columnSpan(['lg' => 1]),
@@ -138,10 +132,17 @@ class EditProduct extends Component implements HasForms
             ->model($this->record);
     }
 
-    public function save(): void
+    public function save()
     {
         $data = $this->form->getState();
         $this->record->update($data);
+        Notification::make()
+        ->title('Updated successfully')
+        ->success()
+        ->send();
+
+        return redirect()->route('product.index');
+
     }
 
     public function render(): View

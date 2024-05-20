@@ -41,7 +41,7 @@ class ListProducts extends Component implements HasForms, HasTable
                     ->label('Create')
                     ->button()
 
-                // ->url(fn (): string => route('project-leader.program.create'))
+                ->url(fn (): string => route('product.create'))
             ])
             ->filters([
                 //

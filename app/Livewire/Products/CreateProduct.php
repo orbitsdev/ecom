@@ -2,13 +2,17 @@
 
 namespace App\Livewire\Products;
 
-use App\Models\Product;
 use Filament\Forms;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
+use App\Models\Product;
 use Livewire\Component;
+use Filament\Forms\Form;
 use Illuminate\Contracts\View\View;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Concerns\InteractsWithForms;
 
 class CreateProduct extends Component implements HasForms
 {
@@ -25,25 +29,95 @@ class CreateProduct extends Component implements HasForms
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->maxLength(191),
-                Forms\Components\TextInput::make('sku')
-                    ->label('SKU')
-                    ->maxLength(191),
-                Forms\Components\Textarea::make('image')
-                    ->columnSpanFull(),
+
+
+                Forms\Components\Group::make()
+
+                    ->schema([
+                        Section::make('Product Details')
+                            // ->extraAttributes(['style' => 'background-color:#f3f4f6; border: 1px none; '])
+                            ->description('fill out all required fields before saving')
+                            ->schema([
+                                Forms\Components\TextInput::make('name')
+                                    ->maxLength(191)
+                                    ->required(),
+
+                                Forms\Components\TextInput::make('sku')
+                                    ->label('SKU')
+                                    ->maxLength(191)
+                                    ->required(),
+
+
+
+
+
+                                RichEditor::make('description')
+                                    ->toolbarButtons([
+
+                                        'blockquote',
+                                        'bold',
+                                        'bulletList',
+                                        'codeBlock',
+                                        'h2',
+                                        'h3',
+                                        'italic',
+                                        'link',
+                                        'orderedList',
+                                        'redo',
+                                        'strike',
+                                        // 'underline',
+                                        // 'undo',
+                                    ]),
+
+
+
+                            ]),
+
+
+                    ])->columnSpan(['lg' => 2]),
+                Forms\Components\Group::make()
+                    ->schema([
+                        Section::make('Product Details')
+                            // ->extraAttributes(['style' => 'background-color:#f3f4f6; border: 1px none; '])
+                            ->schema([
+                                FileUpload::make('image')
+
+                                    ->required()
+                                    ->preserveFilenames()
+                                    ->maxSize(200000)
+                                    ->label('Featured Image')
+                                    ->disk('public')
+                                    ->directory('products'),
+                            ]),
+
+
+                    ])->columnSpan(['lg' => 1]),
+
+
+
+
             ])
+            ->columns(3)
+
+
             ->statePath('data')
             ->model(Product::class);
     }
 
-    public function create(): void
+    public function create()
     {
         $data = $this->form->getState();
 
         $record = Product::create($data);
 
         $this->form->model($record)->saveRelationships();
+
+        Notification::make()
+        ->title('Created successfully')
+        ->success()
+        ->send();
+
+        return redirect()->route('product.index');
     }
 
     public function render(): View
