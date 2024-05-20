@@ -8,6 +8,7 @@ use Livewire\Component;
 use Filament\Tables\Table;
 use Filament\Tables\Actions\Action;
 use Illuminate\Contracts\View\View;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Model;
@@ -30,6 +31,10 @@ class ListProducts extends Component implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('sku')
                     ->label('SKU')
                     ->searchable(isIndividual: true),
+                Tables\Columns\TextColumn::make('price')
+                    ->label('price')
+                    ->searchable(isIndividual: true)->sortable(),
+                    
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable(),
@@ -41,17 +46,31 @@ class ListProducts extends Component implements HasForms, HasTable
                     ->label('Create')
                     ->button()
 
-                ->url(fn (): string => route('product.create'))
+                    ->url(fn (): string => route('product.create'))
             ])
             ->filters([
                 //
             ])
             ->actions([
+                Action::make('view')
+                    ->icon('heroicon-m-eye')
+                    ->button()
+                    // ->slideOver()
+                    ->color('gray')
+                    ->action(fn (Product $record) => $record)
+                    ->modalContent(fn (Product $record): View => view(
+                        'livewire.products.product-view',
+                        ['record' => $record],
+                    ))
+                    ->modalWidth(MaxWidth::SevenExtraLarge)
+                    ,
                 Action::make('edit')
                     ->icon('heroicon-m-pencil')
 
                     ->label('Edit')
                     ->button()
+                    ->color('gray')
+
                     ->tooltip('Modify Details Here')
                     ->url(fn (Model $record): string => route('product.edit', ['record' => $record])),
                 Tables\Actions\DeleteAction::make()->button()

@@ -32,5 +32,7 @@ class AppServiceProvider extends ServiceProvider
         ]);
 
         Modal::closedByClickingAway(false);
+
+        
     }
 }

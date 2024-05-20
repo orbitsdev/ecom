@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Variant;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -19,5 +20,14 @@ class Product extends Model
     public function variants()
     {
         return $this->hasMany(Variant::class);
+    }
+
+    public function getImage()
+    {
+        if (!empty($this->image)) {
+            return Storage::disk('public')->url($this->image);
+        } else {
+            return asset('images/placeholder.png');
+        }
     }
 }

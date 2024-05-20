@@ -3,12 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Jetstream\HasProfilePhoto;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -66,9 +67,9 @@ class User extends Authenticatable
     public function getUserImage()
     {
         if (!empty($this->profile_photo_path)) {
-            return asset('storage/' . $this->profile_photo_path);
+            return Storage::disk('public')->url($this->profile_photo_path);
         } else {
-            return asset('images/sksu.png');
+            return asset('images/placeholder.png');
         }
     }
 }

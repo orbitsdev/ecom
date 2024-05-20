@@ -20,7 +20,7 @@ class Variant extends Model
         if (!empty($this->image)) {
             return asset('storage/' . $this->image);
         } else {
-            return asset('images/sksu.png');
+            return asset('images/placeholder.png');
         }
     }
 }

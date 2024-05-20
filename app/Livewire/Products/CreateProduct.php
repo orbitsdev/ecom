@@ -6,6 +6,7 @@ use Filament\Forms;
 use App\Models\Product;
 use Livewire\Component;
 use Filament\Forms\Form;
+use Filament\Support\RawJs;
 use Illuminate\Contracts\View\View;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Contracts\HasForms;
@@ -46,6 +47,10 @@ class CreateProduct extends Component implements HasForms
                                     ->label('SKU')
                                     ->maxLength(191)
                                     ->required(),
+                                Forms\Components\TextInput::make('price')
+                                ->mask(RawJs::make('$money($input)'))
+                                ->stripCharacters(',')
+                                ->numeric(),
 
 
 
@@ -81,6 +86,7 @@ class CreateProduct extends Component implements HasForms
                             // ->extraAttributes(['style' => 'background-color:#f3f4f6; border: 1px none; '])
                             ->schema([
                                 FileUpload::make('image')
+                                ->image()
 
                                     ->required()
                                     ->preserveFilenames()
@@ -117,7 +123,7 @@ class CreateProduct extends Component implements HasForms
         ->success()
         ->send();
 
-        return redirect()->route('product.index');
+        return redirect()->route('product.edit',['record'=> $record]);
     }
 
     public function render(): View

@@ -23,6 +23,7 @@ class ProductFactory extends Factory
             'sku' => strtoupper(Str::random(8)) . '-' . $this->faker->unique()->numberBetween(1, 1000),
             'image' => $this->faker->imageUrl,
             'description'=> $this->faker->paragraph,
+            'price' => $this->faker->randomFloat(2, 0, 1000) // A
 
         ];
     }
