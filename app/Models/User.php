@@ -58,4 +58,17 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function getFullName(){
+        return $this->name;
+    }
+
+    public function getUserImage()
+    {
+        if (!empty($this->profile_photo_path)) {
+            return asset('storage/' . $this->profile_photo_path);
+        } else {
+            return asset('images/sksu.png');
+        }
+    }
 }

@@ -1,5 +1,8 @@
 <?php
 
+use App\Livewire\Products\CreateProduct;
+use App\Livewire\Products\EditProduct;
+use App\Livewire\Products\ListProducts;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,12 +20,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return redirect()->route('product.index');
     })->name('dashboard');
+
+
+    Route::prefix('/product')->name('product.')->group(function () {
+        Route::get('product-list', ListProducts::class)->name('index');
+        Route::get('create', CreateProduct::class)->name('create');
+        Route::get('create/{record}', EditProduct::class)->name('edit');
+    });
 });
