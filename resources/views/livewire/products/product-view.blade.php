@@ -21,7 +21,11 @@
                     <p class="mt-1 font-medium text-gray-900"><span class="mr-2"> SKU :</span> {{ $record->sku }}</p>
                     <p class="mt-1 font-medium text-gray-900"><span class="mr-2"> Price :</span> ₱ {{ $record->price }}</p>
                     <p class="mt-1 font-medium text-gray-900"><span class="mr-2"> Created At :</span>{{ $record->created_at->format('F d, Y h:i A') }}</p>
-                    <p class="mt-4">{{ $record->description }}</p>
+                   
+                    <div class="mt-4">
+                        <h1 class="text-2xl"> Description</h1>
+                        <p class="">{{ $record->description }}</p>
+                    </div>
                   
                     <div class="mt-6">
                        

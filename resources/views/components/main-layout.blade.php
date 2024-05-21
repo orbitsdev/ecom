@@ -34,6 +34,7 @@
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+
     <!-- Scripts -->
     @filamentStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -104,12 +105,12 @@
             <span aria-hidden="true" class="text-white">{{Auth::user()->name}}</span>
             <form action="{{route('logout')}}" method="POST">
               @csrf
-            <button type="submit" class="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-indigo-700">
-              @if (Auth::user()->profile_photo_path)
+            <button type="submit" class="flex items-center w-full p-4 text-sm font-semibold leading-6 text-white hover:bg-indigo-700">
+              @if (!empty(Auth::user()->profile_photo_path))
               <img class="h-8 w-8 rounded-full bg-indigo-700" src="{{Auth::user()->getUserImage()}}" alt="">
                 
               @endif
-              Logout
+              <i class="fa-solid fa-arrow-right-from-bracket text-2xl mr-2"></i>  Logout
            
             </button>
           </form>
