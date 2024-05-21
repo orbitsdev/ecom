@@ -18,6 +18,9 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->text('image')->nullable();
             $table->decimal('price')->nullable();
+            $table->text('address')->nullable();
+            $table->decimal('old_price')->nullable();
+            // $table->text('address')->nullable();
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
 
 class ProductObserver
 {
@@ -38,7 +39,15 @@ class ProductObserver
      */
     public function deleted(Product $product): void
     {
-        //
+
+        if(!empty($product->image)){
+            if(Storage::disk('public')->exists($product->image)){
+                Storage::disk('public')->delete($product->image);
+            }
+        }
+        $product->variants->each(function($item){
+            $item->variant();
+        });
     }
 
     /**

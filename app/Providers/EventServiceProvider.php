@@ -3,9 +3,13 @@
 namespace App\Providers;
 
 use App\Models\File;
+use App\Models\User;
 use App\Models\Product;
+use App\Models\Variant;
 use App\Observers\FileObserver;
+use App\Observers\UserObserver;
 use App\Observers\ProductObserver;
+use App\Observers\VariantObserver;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -28,8 +32,11 @@ class EventServiceProvider extends ServiceProvider
      * Register any events for your application.
      */
     public function boot(): void
-    {
+    {   User::observe(UserObserver::class);
+
+        
          Product::observe(ProductObserver::class);
+         Variant::observe(VariantObserver::class);
          File::observe(FileObserver::class);
     }
 
