@@ -12,6 +12,13 @@ class Product extends Model
 {
     use HasFactory;
 
+
+    protected $proxies = '*';
+    protected $casts = [ 
+        'image' => 'array',
+     
+    ];
+
     public function files(): MorphMany
     {
         return $this->morphMany(File::class, 'fileable');

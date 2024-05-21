@@ -1,59 +1,54 @@
 <div>
-    {{-- {{$record}} --}}
 
-    <div class="mt-8">
-        <h2 class="sr-only">Products purchased</h2>
 
-        <div class="space-y-24">
-            <div class="grid grid-cols-12 gap-4 text-sm">
-                @if (!empty($record->image))
-                    <div class="col-span-12 sm:col-span-5 md:col-span-5">
-                        <a href="{{ $record->getImage() }}" target="_blank">
-                            <img src="{{ $record->getImage() }}" alt="{{ $record->name }}"
-                                class="w-[400px] h-[400px] object-contain">
-                        </a>
-                    </div>
-                @endif
-                <div class="col-span-12 sm:col-span-7 md:col-span-7 mt-4 sm:mt-0">
-                    <h3 class="text-lg font-medium text-gray-900">
-                        <a href="#" class="mt-4 text-2xl capitalize"> <span class="mr-2"> {{ $record->name }}</a>
-                    </h3>
-                    <p class="mt-1 font-medium text-gray-900"><span class="mr-2"> SKU :</span> {{ $record->sku }}</p>
-                    <p class="mt-1 font-medium text-gray-900"><span class="mr-2"> Price :</span> ₱ {{ $record->price }}</p>
-                    <p class="mt-1 font-medium text-gray-900"><span class="mr-2"> Created At :</span>{{ $record->created_at->format('F d, Y h:i A') }}</p>
+
+        <div class="flex flex-col md:flex-row">
+            <div class="flex-1">
+                <img src="{{$record->getImage()}}" alt="Laptop Pro 2019" class="w-full h-auto rounded-lg">
+                <div class="flex space-x-2 mt-4">
+                    @foreach ($record->variants as $variant)     
+                    <img src="{{asset('images/placeholder.png')}}" alt="Laptop Pro 2019" class="w-1/4 h-auto rounded-lg">
+                    <img src="{{asset('images/placeholder.png')}}" alt="Laptop Pro 2019" class="w-1/4 h-auto rounded-lg">
+                    <img src="{{asset('images/placeholder.png')}}" alt="Laptop Pro 2019" class="w-1/4 h-auto rounded-lg">
+                    <img src="{{asset('images/placeholder.png')}}" alt="Laptop Pro 2019" class="w-1/4 h-auto rounded-lg">
+                    <img src="{{asset('images/placeholder.png')}}" alt="Laptop Pro 2019" class="w-1/4 h-auto rounded-lg">
+                    <img src="{{asset('images/placeholder.png')}}" alt="Laptop Pro 2019" class="w-1/4 h-auto rounded-lg">
+                    @endforeach
                    
-                    <div class="mt-4">
-                        <h1 class="text-2xl"> Description</h1>
-                        <p class="">{{ $record->description }}</p>
-                    </div>
-                  
-                    <div class="mt-6">
-                       
-                        <div class="">
-                            <p class="text-2xl">Variants</p>
-                            <div class="flex mt-2">
-                                @forelse ($record->variants as $variant)
-                                    <li class="relative flex items-center mr-2 ">
-                                        <div>
-                                            
-                                            @if (!empty($variant->image))
-                                            <a href="{{ $variant->getImage() }}" target="_blank">
-                                                <img src="{{ $variant->getImage() }}" alt="{{ $variant->name }}"
-                                                class=" " style="width: 120px; height:120px">
-                                            </a>
-                                            @endif
-                                            <p class="mt-2 truncate  font-medium text-gray-900">{{ $variant->name }}</p>
-                                        </div>
-                                    </li>
-                                @empty
-                                    <li class="text-gray-500">No variants available.</li>
-                                @endforelse
-                                </div>
-                        </div>
-                    </div>
                 </div>
             </div>
-            <!-- More products... -->
+            <div class="flex-1 md:ml-6 mt-6 md:mt-0">
+              
+                <h1 class="text-3xl font-bold"> ₱ {{$record->price}}  @if($record->old_price)
+                    <span class=" ">
+                        - 
+                    </span>
+                    <span class="line-through text-gray-400 font-normal"> ₱ {{$record->old_price}}</span>
+                    @endif
+                </h1>
+                <h2 class="text-2xl font-semibold mt-4 capitalize">{{$record->name}}</h2>
+                <p class="mt-2 text-gray-600">{{$record->description}}</p>
+
+                
+
+                <div class="mt-4">
+                    <h3 class="text-xl font-semibold">SKU</h3>
+                    <div class="flex items-center mt-2 space-x-4">
+                        <label class="border rounded-lg p-2 w-full text-center cursor-pointer">
+                         
+                            <span class="block text-sm text-gray-500">{{$record->sku}}</span>
+                        </label>
+                      
+                    </div>
+                </div>
+
+              
+
+                <div class="mt-6">
+                    <h4 class="text-lg font-semibold">Address</h4>
+                    <p class="text-gray-600">{{$record->address}}</p>
+                </div>
+            </div>
         </div>
-    </div>
+   
 </div>

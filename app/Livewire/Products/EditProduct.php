@@ -92,10 +92,10 @@ class EditProduct extends Component implements HasForms
                             // ->extraAttributes(['style' => 'background-color:#f3f4f6; border: 1px none; '])
                             ->schema([
                                 FileUpload::make('image')
-                                ->image()
+                                // ->image()
                                     ->required()
-                                    ->preserveFilenames()
-                                    ->maxSize(200000)
+                                    // ->preserveFilenames()
+                                    // ->maxSize(200000)
                                     ->label('Featured Image')
                                     ->disk('public')
                                     ->directory('products'),

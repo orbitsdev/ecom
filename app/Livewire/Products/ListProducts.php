@@ -6,6 +6,7 @@ use Filament\Tables;
 use App\Models\Product;
 use Livewire\Component;
 use Filament\Tables\Table;
+use Filament\Actions\StaticAction;
 use Filament\Tables\Actions\Action;
 use Illuminate\Contracts\View\View;
 use Filament\Support\Enums\MaxWidth;
@@ -62,6 +63,9 @@ class ListProducts extends Component implements HasForms, HasTable
                         'livewire.products.product-view',
                         ['record' => $record],
                     ))
+                    ->disabledForm()
+                    ->modalSubmitAction(false) 
+                    ->modalCancelAction(fn (StaticAction $action) => $action->label('Close'))
                     ->modalWidth(MaxWidth::SevenExtraLarge)
                     ,
                 Action::make('edit')
