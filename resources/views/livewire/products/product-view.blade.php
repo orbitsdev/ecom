@@ -18,7 +18,7 @@
             </div> --}}
         </div>
         <div class="flex-1 md:ml-6 mt-6 md:mt-0">
-            <h1 class="text-xl font-bold">SKU: d<span>{{$record->sku}}</span> </h1>
+            <h1 class="text-xl font-bold">SKU: <span>{{$record->sku}}</span> </h1>
             <p> <span class="font-bold"> Product Name:</span>  <span class="text-gray-600"> {{$record->name}}</span></p>
             <p><span class="font-bold"> Status:</span>   <span class="text-gray-600"> {{$record->getStatusText()}}</span></p>
             <h2 class="text-xl font-semibold mt-4">Description</h2>
