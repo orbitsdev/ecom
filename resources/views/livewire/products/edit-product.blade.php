@@ -1,5 +1,10 @@
 <div>
-
+    @if (session('success'))
+    <div class="alert alert-success animate-pulse bg-blue-200 rounded text-blue-800 p-4 mb-2 flex items-center">
+        <i class="fas fa-check-circle mr-2"></i>
+        <span>{{ session('success') }}</span>
+    </div>
+@endif
 
     <h1 class=" text-xl font-bold flex items-center mb-10" >
 

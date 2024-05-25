@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('variants', function (Blueprint $table) {
+        Schema::create('logistics', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->nullable();
-            $table->string('name')->nullable();
-            $table->text('image')->nullable();
-            $table->decimal('price')->nullable();
+            $table->foreignId('order_id')->nullable();
+            $table->text('parcel_current_location')->nullable();
+            $table->text('storage_house')->nullable();
+            $table->string('status')->default('arrived')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('variants');
+        Schema::dropIfExists('logistics');
     }
 };

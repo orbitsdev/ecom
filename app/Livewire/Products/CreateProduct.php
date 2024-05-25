@@ -10,10 +10,12 @@ use Filament\Support\RawJs;
 use Illuminate\Contracts\View\View;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Concerns\InteractsWithForms;
+use Awcodes\FilamentTableRepeater\Components\TableRepeater;
 
 class CreateProduct extends Component implements HasForms
 {
@@ -43,36 +45,38 @@ class CreateProduct extends Component implements HasForms
                                     ->maxLength(191)
                                     ->required(),
 
-                                Forms\Components\TextInput::make('sku')
-                                    ->label('SKU')
-                                    ->maxLength(191)
-                                    ->required(),
-                                Forms\Components\TextInput::make('price')
-                                ->mask(RawJs::make('$money($input)'))
-                                ->stripCharacters(',')
-                                ->numeric(),
+                                // Forms\Components\TextInput::make('sku')
+                                //     ->label('SKU')
+                                //     ->maxLength(191)
+                                //     ->required(),
+                               
 
 
 
 
+                                // RichEditor::make('description')
+                                
+                                //     ->toolbarButtons([
 
-                                RichEditor::make('description')
-                                    ->toolbarButtons([
+                                //         'blockquote',
+                                //         'bold',
+                                //         'bulletList',
+                                //         'codeBlock',
+                                //         'h2',
+                                //         'h3',
+                                //         'italic',
+                                //         'link',
+                                //         'orderedList',
+                                //         'redo',
+                                //         'strike',
+                                //         // 'underline',
+                                //         // 'undo',
+                                //     ]),
 
-                                        'blockquote',
-                                        'bold',
-                                        'bulletList',
-                                        'codeBlock',
-                                        'h2',
-                                        'h3',
-                                        'italic',
-                                        'link',
-                                        'orderedList',
-                                        'redo',
-                                        'strike',
-                                        // 'underline',
-                                        // 'undo',
-                                    ]),
+                                Textarea::make('description')
+                                ->required()
+                                ->rows(5)
+                                ->autoSize()
 
 
 
@@ -82,7 +86,7 @@ class CreateProduct extends Component implements HasForms
                     ])->columnSpan(['lg' => 2]),
                 Forms\Components\Group::make()
                     ->schema([
-                        Section::make('Product Details')
+                        Section::make('Featured Image ')
                             // ->extraAttributes(['style' => 'background-color:#f3f4f6; border: 1px none; '])
                             ->schema([
                                 FileUpload::make('image')
@@ -91,10 +95,11 @@ class CreateProduct extends Component implements HasForms
                                     ->required()
                                     ->preserveFilenames()
                                     ->maxSize(200000)
-                                    ->label('Featured Image')
+                                    ->label('Image')
                                     ->disk('public')
                                     ->directory('products'),
                             ]),
+                       
 
 
                     ])->columnSpan(['lg' => 1]),
@@ -123,7 +128,7 @@ class CreateProduct extends Component implements HasForms
         ->success()
         ->send();
 
-        return redirect()->route('product.edit',['record'=> $record]);
+        return redirect()->route('product.edit',['record'=> $record])->with('success', 'Poduct successfully created! Please complete additional product details');
     }
 
     public function render(): View

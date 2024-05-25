@@ -6,6 +6,7 @@ use Filament\Tables;
 use App\Models\Product;
 use Livewire\Component;
 use Filament\Tables\Table;
+use Filament\Actions\StaticAction;
 use Filament\Tables\Actions\Action;
 use Illuminate\Contracts\View\View;
 use Filament\Support\Enums\MaxWidth;
@@ -31,9 +32,9 @@ class ListProducts extends Component implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('sku')
                     ->label('SKU')
                     ->searchable(isIndividual: true),
-                Tables\Columns\TextColumn::make('price')
-                    ->label('price')
-                    ->searchable(isIndividual: true)->sortable(),
+                // Tables\Columns\TextColumn::make('price')
+                //     ->label('price')
+                //     ->searchable(isIndividual: true)->sortable(),
                     
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -62,6 +63,8 @@ class ListProducts extends Component implements HasForms, HasTable
                         'livewire.products.product-view',
                         ['record' => $record],
                     ))
+                    ->modalSubmitAction(false)
+                    ->modalCancelAction(fn (StaticAction $action) => $action->label('Close'))
                     ->modalWidth(MaxWidth::SevenExtraLarge)
                     ,
                 Action::make('edit')

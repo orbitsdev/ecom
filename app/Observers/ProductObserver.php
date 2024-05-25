@@ -46,7 +46,7 @@ class ProductObserver
             }
         }
         $product->variants->each(function($item){
-            $item->variant();
+            $item->delete();
         });
     }
 

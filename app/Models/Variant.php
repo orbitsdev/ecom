@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Variant extends Model
@@ -18,7 +19,7 @@ class Variant extends Model
     public function getImage()
     {
         if (!empty($this->image)) {
-            return asset('storage/' . $this->image);
+            return Storage::disk('public')->url($this->image);
         } else {
             return asset('images/placeholder.png');
         }

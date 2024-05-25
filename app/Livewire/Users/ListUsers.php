@@ -8,6 +8,7 @@ use Livewire\Component;
 use Filament\Tables\Table;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Hash;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Contracts\HasTable;
@@ -17,6 +18,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Rawilk\FilamentPasswordInput\Password;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
 
@@ -40,6 +42,14 @@ class ListUsers extends Component implements HasForms, HasTable
             TextInput::make('email')
                 ->required()
                 ->email()
+                ->unique(ignoreRecord: true)
+                ->maxLength(255),
+            Password::make('password')
+            ->label(fn(String $operation)=> $operation == 'Create' ? 'Password' : 'New Password' )
+            ->password()
+            ->dehydrateStateUsing(fn(String $state)=> Hash::make($state) )
+            ->dehydrated(fn(?string $state)=> filled($state))
+                ->required(fn(string $operation)=> $operation ==='create')
                 ->unique(ignoreRecord: true)
                 ->maxLength(255),
 

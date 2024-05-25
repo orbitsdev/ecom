@@ -8,6 +8,7 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -71,5 +72,10 @@ class User extends Authenticatable
         } else {
             return asset('images/placeholder.png');
         }
+    }
+
+    public function profile(): MorphOne
+    {
+        return $this->morphOne(File::class, 'fileable');
     }
 }
