@@ -11,6 +11,7 @@ use Filament\Tables\Actions\Action;
 use Illuminate\Contracts\View\View;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -36,9 +37,11 @@ class ListProducts extends Component implements HasForms, HasTable
                 //     ->label('price')
                 //     ->searchable(isIndividual: true)->sortable(),
                     
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable(),
+                // Tables\Columns\TextColumn::make('created_at')
+                //     ->dateTime()
+                //     ->sortable(),
+
+                    ViewColumn::make('variants')->view('tables.columns.product-variants')
 
             ])
             ->headerActions([

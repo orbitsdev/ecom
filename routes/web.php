@@ -1,12 +1,14 @@
 <?php
 
-use App\Livewire\Dashboard\Dashboard;
-use App\Livewire\Products\CreateProduct;
-use App\Livewire\Products\EditProduct;
-use App\Livewire\Products\ListProducts;
-use App\Livewire\Products\ProductView;
+use App\Livewire\ClientDashboard;
 use App\Livewire\Users\ListUsers;
+use Illuminate\Support\Facades\Auth;
+use App\Livewire\Dashboard\Dashboard;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Products\EditProduct;
+use App\Livewire\Products\ProductView;
+use App\Livewire\Products\ListProducts;
+use App\Livewire\Products\CreateProduct;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,9 +38,26 @@ Route::middleware([
     //     return redirect()->route('user.index');
     // })->name('dashboard');
 
+       
+    Route::get('/dashboard',  function(){
+        if(Auth::user()->role === 'Admin'){
+            return redirect()->route('admin-dashboard');
+        }else{
+            
+            return redirect()->route('client-dashboard');
+        }
+    })->name('dashboard');
+   
+   
+
+    Route::middleware(['can:is-client'])->group(function () {
+        Route::get('/client-dashboard',  ClientDashboard::class)->name('client-dashboard');
+    });
+    
     Route::middleware(['can:is-admin'])->group(function () {
-        Route::get('/dashboard',  Dashboard::class)->name('dashboard');
+        Route::get('/admin-dashboard',  Dashboard::class)->name('admin-dashboard');
         Route::prefix('/user')->name('user.')->group(function () {
+
             Route::get('/lists', ListUsers::class)->name('index');
             // Route::get('create', CreateProduct::class)->name('create');
             // Route::get('create/{record}', EditProduct::class)->name('edit');
