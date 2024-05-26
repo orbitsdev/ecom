@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->nullable();
-            $table->foreignId('product_id')->nullable();
-            $table->bigInteger('quantity')->nullable();
+            $table->foreignId('variant_id')->nullable();
+            $table->bigInteger('quantity')->default(1)->nullable();
             $table->timestamps();
         });
     }

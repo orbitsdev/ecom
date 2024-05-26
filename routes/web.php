@@ -4,11 +4,14 @@ use App\Livewire\ClientDashboard;
 use App\Livewire\Users\ListUsers;
 use Illuminate\Support\Facades\Auth;
 use App\Livewire\Dashboard\Dashboard;
+use App\Livewire\Order\UserOrderList;
+use App\Livewire\Orders\EditOrder;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Products\EditProduct;
 use App\Livewire\Products\ProductView;
 use App\Livewire\Products\ListProducts;
 use App\Livewire\Products\CreateProduct;
+use App\Livewire\Products\VariantionSelection;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,7 +54,10 @@ Route::middleware([
    
 
     Route::middleware(['can:is-client'])->group(function () {
-        Route::get('/client-dashboard',  ClientDashboard::class)->name('client-dashboard');
+        Route::get('/shop',  ClientDashboard::class)->name('client-dashboard');
+        Route::get('/shop/product/{record}/variations',  VariantionSelection::class)->name('variation-selection');
+        Route::get('/shop/orders/',  UserOrderList::class)->name('order-list');
+        Route::get('/shop/orders/checkout/{record}',  EditOrder::class)->name('order.edit');
     });
     
     Route::middleware(['can:is-admin'])->group(function () {

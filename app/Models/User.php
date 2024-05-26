@@ -3,7 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Order;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Jetstream\HasProfilePhoto;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notifiable;
@@ -67,8 +69,8 @@ class User extends Authenticatable
 
     public function getUserImage()
     {
-        if (!empty($this->profile_photo_path)) {
-            return Storage::disk('public')->url($this->profile_photo_path);
+        if (!empty(Auth::user()->profile_photo_path)) {
+            return Storage::disk('public')->url(Auth::user()->profile_photo_path);
         } else {
             return asset('images/placeholder.png');
         }
@@ -77,5 +79,24 @@ class User extends Authenticatable
     public function profile(): MorphOne
     {
         return $this->morphOne(File::class, 'fileable');
+    }
+
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
+
+   
+
+ 
+    public function hasManyPreparingOrders(){
+         $preparingOrdersCount = Auth::user()->orders
+            ->where('status', 'prepairing')
+            ->count();
+
+          
+       
+        return $preparingOrdersCount > 1;
+           
+
     }
 }

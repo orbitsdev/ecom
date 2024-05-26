@@ -13,4 +13,14 @@ class Item extends Model
     public function order(){
         return $this->belongsTo(Order::class);
     }
+
+    public function variant(){
+        return $this->belongsTo(Variant::class);
+    }
+
+    public function itemPrice(){
+        return $this->variant->price * $this->quantity;
+    }
+
+
 }

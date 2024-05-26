@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use App\Models\Item;
+use App\Models\User;
+use App\Models\Product;
+use App\Models\Logistic;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,6 +29,7 @@ class Order extends Model
     }
 
 
+
     public function proffOfPayment()
     {
         if (!empty($this->proof_of_payment)) {
@@ -33,5 +37,11 @@ class Order extends Model
         } else {
             return asset('images/placeholder.png');
         }
+    }
+
+    public function totalSummary(){
+        return $this->items->sum(function($item){
+            return $item->itemPrice();
+        });
     }
 }

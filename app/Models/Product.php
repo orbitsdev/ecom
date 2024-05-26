@@ -23,6 +23,17 @@ class Product extends Model
     {
         return $this->hasMany(Variant::class);
     }
+    public function getLowestPrice()
+    {
+        return $this->variants()->min('price');
+    }
+
+ 
+    public function getHighestPrice()
+    {
+        return $this->variants()->max('price');
+    }
+
 
     public function getImage()
     {
@@ -36,7 +47,7 @@ class Product extends Model
     public function getStatusText(){
         return $this->active === true ? 'Active' : 'Inactive';
     }
-
+   
 
    
 }

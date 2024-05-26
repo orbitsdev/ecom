@@ -95,8 +95,11 @@ class EditProduct extends Component implements HasForms
                                             ->maxLength(191)
                                             ->required(),
                                         Forms\Components\TextInput::make('price')
-                                            ->maxLength(191)
-                                            ->required(),
+                                        ->required()
+                                    ->mask(RawJs::make('$money($input)'))
+                                    ->stripCharacters(',')
+
+                                    ->numeric(),
 
 
                                         FileUpload::make('image')
