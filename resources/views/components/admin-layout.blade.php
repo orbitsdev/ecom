@@ -69,20 +69,23 @@
 
          
        </ul>
-       <div class="py-4 ">
-         <span aria-hidden="true" class="text-white">{{Auth::user()->name}}</span>
-         <form action="{{route('logout')}}" method="POST">
-           @csrf
-         <button type="submit" class="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-indigo-700">
-           @if (Auth::user()->profile_photo_path)
-           <img class="h-8 w-8 rounded-full bg-indigo-700" src="{{Auth::user()->getUserImage()}}" alt="">
-             
-           @endif
-           Logout
-        
-         </button>
-       </form>
-       </div>
+       <div class="py-4 flex items-center gap-x-4">
+        @if (Auth::user()->profile_photo_path)
+            <img class="h-10 w-10 rounded-full" src="{{ Auth::user()->getUserImage() }}" alt="{{ Auth::user()->name }}">
+        @else
+            <div class="h-10 w-10 rounded-full bg-indigo-700 flex items-center justify-center text-white font-bold">
+                {{ substr(Auth::user()->name, 0, 1) }}
+            </div>
+        @endif
+        <span class="text-white font-semibold">{{ Auth::user()->name }}</span>
+        <form action="{{ route('logout') }}" method="POST" class="ml-auto">
+            @csrf
+            <button type="submit" class="px-4 py-2 bg-indigo-600 text-sm font-semibold leading-6 text-white rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                Logout
+            </button>
+        </form>
+    </div>
+    
      </nav>
    </div>
  </div>

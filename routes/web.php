@@ -6,6 +6,7 @@ use App\Livewire\Users\ListUsers;
 use Illuminate\Support\Facades\Auth;
 use App\Livewire\Dashboard\Dashboard;
 use App\Livewire\Order\ListOrderReived;
+use App\Livewire\Order\PrintReport;
 use App\Livewire\Order\UserOrderList;
 use App\Livewire\Orders\EditOrder;
 use App\Livewire\Orders\ListOrders;
@@ -31,7 +32,7 @@ use App\Livewire\Products\VariantionSelection;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 
@@ -58,7 +59,7 @@ Route::middleware([
     })->name('dashboard');
    
    
-
+    Route::get('/report/order/{record}',  PrintReport::class)->name('print-order');
     Route::middleware(['can:is-client'])->group(function () {
         Route::get('/shop',  ClientDashboard::class)->name('client-dashboard');
         Route::get('/shop/product/{record}/variations',  VariantionSelection::class)->name('variation-selection');

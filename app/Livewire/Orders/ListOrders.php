@@ -59,6 +59,20 @@ class ListOrders extends Component implements HasForms, HasTable
             ])
             ->actions([
 
+                Action::make('print')->icon('heroicon-m-printer')->label('Print')
+                ->color('gray')
+              
+                    ->button()
+                    ->outlined()
+                    ->modalSubmitAction(false)
+                    ->modalCancelAction(fn (StaticAction $action) => $action->label('Close'))
+                    ->disabledForm()
+                    ->url(function(Model $record){
+                        return route('print-order',['record'=> $record->id]);
+                    })
+                    ->modalWidth(MaxWidth::SevenExtraLarge)
+                    ,
+
                 Action::make('view')->icon('heroicon-m-eye')->label('View')
                 ->color('gray')
               
