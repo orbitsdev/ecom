@@ -4,10 +4,12 @@ namespace App\Providers;
 
 use App\Models\File;
 use App\Models\User;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Variant;
 use App\Observers\FileObserver;
 use App\Observers\UserObserver;
+use App\Observers\OrderObserver;
 use App\Observers\ProductObserver;
 use App\Observers\VariantObserver;
 use Illuminate\Support\Facades\Event;
@@ -32,10 +34,9 @@ class EventServiceProvider extends ServiceProvider
      * Register any events for your application.
      */
     public function boot(): void
-    {   User::observe(UserObserver::class);
-
-        
+    {    User::observe(UserObserver::class);
          Product::observe(ProductObserver::class);
+         Order::observe(OrderObserver::class);
          Variant::observe(VariantObserver::class);
          File::observe(FileObserver::class);
     }

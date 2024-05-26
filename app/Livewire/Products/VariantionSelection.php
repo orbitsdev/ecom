@@ -45,7 +45,7 @@ class VariantionSelection extends Component implements HasForms, HasActions
                     ->options(Order::latest()->get()->map(function($item){
                         return [
                             'id'=> $item->id,
-                            'created_at'=>  'Order.'. $item->id.' '.$item->created_at->format('M d, Y')
+                            'created_at'=>  'Order.'. $item->sku.' '.$item->created_at->format('M d, Y')
                         ];
                     })->pluck('created_at', 'id'))
                     ->searchable()

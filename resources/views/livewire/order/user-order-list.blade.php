@@ -11,7 +11,7 @@
 
             <div class="">
 
-                <h1 class="text-3xl font-bold tracking-tight text-gray-900  mr-2">Order.{{$order->id}}</h1>
+                <h1 class="text-3xl font-bold tracking-tight text-gray-900  mr-2">SKU # {{$order->sku}}</h1>
                 <p class=" ">{{$order->created_at->format('M d, Y')}}</p>
             </div>
         <div class="mt-10 border-t border-gray-200">

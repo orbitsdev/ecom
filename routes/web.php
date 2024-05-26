@@ -1,11 +1,17 @@
 <?php
 
 use App\Livewire\ClientDashboard;
+use App\Livewire\Orders\ListsRecieveOrders;
 use App\Livewire\Users\ListUsers;
 use Illuminate\Support\Facades\Auth;
 use App\Livewire\Dashboard\Dashboard;
+use App\Livewire\Order\ListOrderReived;
 use App\Livewire\Order\UserOrderList;
 use App\Livewire\Orders\EditOrder;
+use App\Livewire\Orders\ListOrders;
+use App\Livewire\Orders\ManageOrder;
+use App\Livewire\Orders\OrderSummary;
+use App\Livewire\Orders\ToShip;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Products\EditProduct;
 use App\Livewire\Products\ProductView;
@@ -58,6 +64,9 @@ Route::middleware([
         Route::get('/shop/product/{record}/variations',  VariantionSelection::class)->name('variation-selection');
         Route::get('/shop/orders/',  UserOrderList::class)->name('order-list');
         Route::get('/shop/orders/checkout/{record}',  EditOrder::class)->name('order.edit');
+        Route::get('/shop/to-ship/',  ToShip::class)->name('to-ship-list');
+        Route::get('/shop/order/summary/{record}',  OrderSummary::class)->name('order.summary');
+        Route::get('/shop/order/history/',  ListOrderReived::class)->name('order.receive');
     });
     
     Route::middleware(['can:is-admin'])->group(function () {
@@ -73,6 +82,14 @@ Route::middleware([
             Route::get('create', CreateProduct::class)->name('create');
             Route::get('create/{record}', EditProduct::class)->name('edit');
             Route::get('view/{record}', ProductView::class)->name('view');
+        });
+        
+        
+        Route::prefix('/admin-orders')->name('order-manage.')->group(function () {
+            Route::get('orders', ListOrders::class)->name('index');
+            Route::get('order/manage/{record}', ManageOrder::class)->name('edit');
+            Route::get('orders/receive', ListsRecieveOrders::class)->name('receive-orders');
+         
         });
     });
    
