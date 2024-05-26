@@ -43,7 +43,7 @@
                   <a href="{{ route('order.receive') }}"
                       class="relative flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-app-500 focus:ring-offset-2 mr-4">
                       <div class="flex flex-col items-center">
-                          <span class="sr-only">To Receive</span>
+                          <span class="sr-only">Order history</span>
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                               stroke="currentColor" class="h-6 w-6">
                               <path stroke-linecap="round" stroke-linejoin="round"
